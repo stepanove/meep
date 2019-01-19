@@ -36,11 +36,12 @@ void structure::set_output_directory(const char *name) {
   char buf[300];
   outdir = name;
   if (!quiet) master_printf("Using output directory %s/\n", name);
-  if (readlink(symlink_name, buf, 300) > 0) {
+/*  if (readlink(symlink_name, buf, 300) > 0) {
     // Link already exists.
     unlink(symlink_name);
   }
   symlink(name, symlink_name);
+*/
   outdir = name;
 }
 
@@ -74,7 +75,7 @@ static bool is_ok_dir(const char *dirname) {
   if (am_master()) {
     direxists = (dir = opendir(dirname)) != NULL;
     if (direxists) closedir(dir);
-    else mkdir(dirname, 00777);
+//    else mkdir(dirname, 00777);
   }
   direxists = broadcast(0, direxists);
   return !direxists;
@@ -139,7 +140,7 @@ const char *make_output_directory(const char *exename, const char *jobname) {
 }
 
 void trash_output_directory(const char *dirname) {
-  if (am_master()) mkdir(dirname, 00777);
+//  if (am_master()) mkdir(dirname, 00777);
 }
 
 } // namespace meep
